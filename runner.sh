@@ -11,7 +11,7 @@ echo -e "\n" > /data/grade.log
 while IFS= read -r line; do
     # Skip empty lines in domains.txt
     [[ -z "$line" ]] && continue
-
+    echo -n "$line: " >> /data/grade.log
     echo -e "\n" >> /data/grade.log
     # Run testssl, grep for the grade line, then print only the last field (the grade)
     testssl --quiet --color 0 "$line" | grep "Overall Grade" | awk '{print $NF}' >> /data/grade.log

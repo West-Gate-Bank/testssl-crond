@@ -5,9 +5,9 @@ services:
     restart: always
     environment:
       # ip address or fqdn of the email server and port to send (no authorization support)
-      - EMAIL_SERVER=1.2.3.4:25
+      - EMAIL_SERVER=10.1.0.11:25
       # email rewrite domain on who the email is from
-      - EMAIL_DOMAIN=youremaildomain.com
+      - EMAIL_DOMAIN=westgate.bank
       - TZ=America/Chicago
     volumes:
       # I have example files in the repo for email.txt domains.txt emailaddres.txt and mycron
