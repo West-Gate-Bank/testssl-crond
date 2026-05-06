@@ -1,0 +1,20 @@
+[Unit]
+Description=Cron daemon
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/crond -n
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=10
+
+# Security and hardening options
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/spool/cron /var/log /data
+
+[Install]
+WantedBy=multi-user.target
