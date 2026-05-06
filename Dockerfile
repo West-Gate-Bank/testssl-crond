@@ -1,32 +1,38 @@
-# Debian 13 (Trixie) base
-FROM debian:trixie-slim
+# RHEL9 UBI-init base with systemd support
+FROM registry.access.redhat.com/ubi9/ubi-init:latest
 
 ENV TZ=UTC
 
-# Install testssl.sh package and cron
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install testssl.sh package, cron, and other dependencies
+RUN yum update -y && \
+    yum install -y \
     testssl.sh \
-    cron \
+    cronie \
+    cronie-noanacron \
     ca-certificates \
     ssmtp \
     vim \
-    supervisor \
     tzdata \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
-    && rm -rf /var/lib/apt/lists/*
+    && yum clean all \
+    && rm -rf /var/cache/yum/*
 
 # Create working directory for logs and input files
 WORKDIR /data
 
 # Copy the runner and entrypoint scripts
 COPY runner.sh /usr/local/bin/runner.sh
-COPY supervisor.conf /data/supervisor.conf
 COPY entrypoint.sh /entrypoint.sh
-# COPY mycron /etc/cron.d/mycron
+
+# Copy systemd service file for crond
+COPY crond.service /etc/systemd/system/crond.service
+
+# Set executable permissions
 RUN chmod +x /usr/local/bin/runner.sh /entrypoint.sh
-# RUN chmod 0644 /etc/cron.d/mycron
-# RUN chown root:root /etc/cron.d/mycron
+
+# Enable crond service to start automatically
+RUN systemctl enable crond.service
 
 # Start the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
