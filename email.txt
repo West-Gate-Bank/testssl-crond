@@ -1,3 +1,3 @@
-To: user1@example.com,user2@example.com,user3@example.com
-From: root@example.com
+To: ngebhard@westgate.bank,landerson@westgate.bank,cchapman@westgate.bank
+From: wgbdocker@westgate.bank
 Subject: Monthly SSL Grades
