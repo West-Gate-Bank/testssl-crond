@@ -1,0 +1,19 @@
+[Unit]
+Description=Crond Setup
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/setup-cron.sh
+Restart=on-failure
+RestartSec=10
+
+# Security and hardening options
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/spool/cron /var/log /data
+
+[Install]
+WantedBy=multi-user.target

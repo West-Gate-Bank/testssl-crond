@@ -1,6 +1,6 @@
 services:
-  testssl-crond:
-    image: ghcr.io/west-gate-bank/testssl-crond:latest
+  testssl:
+    image: ghcr.io/west-gate-bank/testssl:ubi
     container_name: testssl
     restart: always
     environment:
