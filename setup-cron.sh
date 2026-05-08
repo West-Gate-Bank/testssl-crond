@@ -3,12 +3,10 @@
 # set -e
 
 set -euo pipefail
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
-echo $TZ > /etc/timezone
-
 
 declare -p | grep -Ev 'BASHOPTS|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /etc/container.env
 chmod 0644 /etc/container.env
+for e in $(tr "\000" "\n" < /proc/1/environ); do export "$e"; done
 
 echo "myorigin = $EMAIL_DOMAIN" > /etc/postfix/main.cf
 echo "relayhost = [$EMAIL_SERVER]"  >> /etc/postfix/main.cf

@@ -7,7 +7,7 @@ ARG URL=https://github.com/testssl/testssl.sh.git
 
 # Install testssl.sh package, cron, and other dependencies
 RUN yum update -y && \
-    yum install -y \
+    yum install -y --allowerasing \
     cronie \
     cronie-noanacron \
     ca-certificates \
@@ -20,17 +20,20 @@ RUN yum update -y && \
     gawk \
     sed \
     procps \
-    git \	
+    git \
+    coreutils \
+    shadow-utils \
+    bind-utils \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
     && yum clean all \
     && rm -rf /var/cache/yum/* 
     
-RUN git clone -b ${BUILD_VERSION} $URL /home/testssl \ 
-    && addgroup testssl \
-    && adduser -G testssl -g "testssl user" -s /bin/bash -D testssl \
+RUN git clone --depth 1 -b ${BUILD_VERSION} $URL /home/testssl 
+
+RUN groupadd testssl \
+    && useradd -g testssl -c "testssl" -s /bin/bash -m -d /home/testssl testssl \
     && ln -s /home/testssl/testssl.sh /usr/local/bin/ \
-    && mkdir -m 755 -p /home/testssl/etc /home/testssl/bin \
     && chmod +x /usr/local/bin/testssl.sh
 
 # Create working directory for logs and input files

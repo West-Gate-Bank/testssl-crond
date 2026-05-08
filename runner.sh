@@ -14,7 +14,7 @@ while IFS= read -r line; do
      [[ -z "$line" ]] && continue
      
      # Capture the grade into a variable
-     GRADE=$(testssl --quiet --color 0 "$line" | grep "Overall Grade" | awk '{print $NF}')
+     GRADE=$(testssl.sh --quiet --color 0 "$line" | grep "Overall Grade" | awk '{print $NF}')
      
      # If GRADE is empty (scan failed), provide a fallback message
      GRADE=${GRADE:-"Scan Failed/No Grade"}
@@ -31,4 +31,4 @@ done < "$DOMAINS"
 cat /data/email.txt /data/grade.log > /data/emailout.log
 
 # Send the email
-/usr/sbin/ssmtp "$(cat $EMAIL_ADDRESS)" < /data/emailout.log
+sendmail "$(cat $EMAIL_ADDRESS)" < /data/emailout.log
