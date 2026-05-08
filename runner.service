@@ -1,0 +1,6 @@
+[Unit]
+Description=Monthly runner script
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/runner.sh

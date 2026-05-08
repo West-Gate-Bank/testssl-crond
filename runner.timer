@@ -1,0 +1,11 @@
+[Unit]
+Description=Run runner when i tell it
+
+
+[Timer]
+OnCalendar=*-*-08 16:50:00
+Persistent=true
+
+
+[Install]
+WantedBy=timers.target
