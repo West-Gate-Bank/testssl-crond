@@ -39,7 +39,7 @@ Environment=EMAIL_SERVER=10.1.0.11
 Environment=EMAIL_DOMAIN=westgate.bank
 Environment=RECIPIENT_TO="cchapman@westgate.bank"
 Environment=RECIPIENT_FROM="testssl@westgate.bank"
-Environment=SUBJECT="Monthly SSL Report"
+Environment=SUBJECT="Monthly_SSL_Report"
 
 # Healthcheck
 
