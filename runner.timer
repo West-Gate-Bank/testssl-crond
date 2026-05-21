@@ -2,7 +2,7 @@
 Description=Scheduled timer to handle same tasks as crond does but for a single purpose
 
 
-/[Timer]
+[Timer]
 OnCalendar=*-*-08 17:31:00
 Persistent=true
 
